@@ -66,10 +66,10 @@ function key_pressed_animation(key) {
   }
 }
 
-function button_back_default(button){
+function button_back_default(button) {
   // define a regex expression that ends with " pressed"
-  let pressed_re=/\s{1}pressed$/;
+  let pressed_re = /\s{1}pressed$/;
   // cancel 'pressed' css mode of a button
-  button.className = button.className.replace(pressed_re,'');
+  button.className = button.className.replace(pressed_re, '');
   console.log(button.className);
 }
