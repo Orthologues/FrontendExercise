@@ -84,11 +84,11 @@ then type
 yarn add jquery &&
 ```
 in order to add jquery as a dependency into <code>package.json</code> of your local project.
-Then, in order to implement minimal local dependencies for saving disk space, type
+Then, in order to avoid storing dependency files locally for saving disk space, type
 ```bash
 rm -rf node_modules && yarn link jquery
 ```
-Then declare this at the beginning your local .js file
+Then declare this at the beginning of your local .js file
 ```javascript
 const $ = require('jquery');
 ```
