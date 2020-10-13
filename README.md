@@ -71,19 +71,25 @@ yarn global add typescript
 yarn global add @vue/cli  # etc
 ```
 
-What if a yarn pkg doesn't have a binary to execute? Use <code>yarn link</code> instead. Let's take jquery with integrity syntax as an example.
+What if a yarn pkg doesn't have a binary to execute? Use <code>yarn link</code> instead. Let's take jquery as an example.
 ```bash
-yarn global add jquery;
-cd ~; jq_itg=$(find -name "jquery"|grep -E '.+yarn.+integrity');
+yarn global add jquery &&
+cd ~; jq_itg=$(find -name "jquery"|grep -E '.+yarn.+');
 cd $jq_itg; yarn link; unset jq_itg;
-cd ~/my/web/project/; yarn link jquery;
-yarn init;
-nano package.json;
+cd ~/my/web/project/;
+yarn init; #configure package.json at Terminal
 ```
-then add
-```json
-{
-  "type": "module"
-}
+then type
+```bash
+yarn add jquery &&
 ```
-into the top of <code>./package.json</code>
+in order to add jquery as a dependency into <code>package.json</code> of your local project.
+Then, in order to implement minimal local dependencies for saving disk space, type
+```bash
+rm -rf node_modules && yarn link jquery
+```
+Then declare this at the beginning your local .js file
+```javascript
+const $ = require('jquery');
+```
+However, a default browser doesn't define <code>require</code>, so it's necessary to add [RequireJS](https://requirejs.org/) as a plugin.
