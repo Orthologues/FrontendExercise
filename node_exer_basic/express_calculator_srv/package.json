@@ -1,0 +1,31 @@
+{
+  "name": "my_express_srv",
+  "version": "1.0.0",
+  "description": "exercise in building a preliminary server with express.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Orthologues/WebProgrammingExer.git"
+  },
+  "keywords": [
+    "express.js",
+    "node",
+    "npm",
+    "yarn",
+    "server"
+  ],
+  "author": "Jiawei Zhao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Orthologues/WebProgrammingExer/issues"
+  },
+  "homepage": "https://github.com/Orthologues/WebProgrammingExer#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jquery": "^3.5.1"
+  }
+}

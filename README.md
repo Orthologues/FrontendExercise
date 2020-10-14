@@ -49,8 +49,8 @@ ssh-add # run this command locally
 brew install node # in MacOS
 sudo apt install -y npm # in Linux
 sudo npm install -g yarn -g n
-sudo n stable
-npm --version
+sudo n stable # or 'sudo n latest'
+npm --version; node --version # 12.x for stable, 14.x for latest
 ```
 
 Change config of yarn to install packages without sudo later
@@ -88,8 +88,27 @@ Then, in order to avoid storing dependency files locally for saving disk space, 
 ```bash
 rm -rf node_modules && yarn link jquery
 ```
-Then declare this at the beginning of your local .js file
+Use <code>npm ci</code> to add implicit dependencies to your local <code>node_modules</code>,
+then declare this at the beginning of your local .js file
 ```javascript
 const $ = require('jquery');
 ```
 However, a default browser doesn't define <code>require</code>, so it's necessary to add [RequireJS](https://requirejs.org/) as a plugin.
+
+#### Use ES6 "import" syntax instead of node.js "require" syntax to import modules
+add
+```json
+"type": "module",
+```
+at the top of local <code>package.json</code>, or simply use <code>.mjs</code> suffix for your javascript file.
+
+#### solve the <code>'__dirname' is not defined</code> issue in ES6 syntax, use import.meta
+```javascript
+import path from 'path';
+console.log(JSON.stringify(import.meta));
+const moduleURL = new URL(import.meta.url);
+console.log(`pathname ${moduleURL.pathname}`);
+console.log(`dirname ${path.dirname(moduleURL.pathname)}`);
+const __dirname = path.dirname(moduleURL.pathname);
+console.log(__dirname);
+```

@@ -1,0 +1,24 @@
+/* this .css file corresponds to "../../index.html" */
+
+.bmi-input{
+  margin: 20px;
+  width: 240px;
+  height: 60px;
+}
+
+#bmi-submit{
+  margin: 20px;
+  width: 200px;
+  height: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .bmi-input{
+    width: 120px;
+    height: 30px;
+  }
+  #bmi-submit{
+    width: 120px;
+    height: 30px;
+  }
+}
