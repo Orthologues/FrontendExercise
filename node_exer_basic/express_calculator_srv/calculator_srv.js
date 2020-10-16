@@ -6,6 +6,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
+const calculate_BMI = require('./math_lib').calculate_BMI;
 var BMI_calc_times = 0;
 
 // __dirname means the current folder
@@ -53,16 +54,3 @@ app.listen(3500, function() {
   console.log("local host 3500");
   // check localhost:3500 at your browser
 });
-
-//server-side mathematical part
-function calculate_BMI(height, weight) {
-  height = Number(height) / 100;
-  let BMI = Number(weight) / Math.pow(height, 2);
-  // if height or weight isn't a number, then BMI isn't a number, throw err
-  if (isNaN(BMI)) {
-    throw new Error('Invalid input. Your input should be number!');
-  } else {
-    // round BMI to 2 numbers after dot
-    return "Your BMI is " + BMI.toFixed(2).toString();
-  }
-}
