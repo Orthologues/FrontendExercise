@@ -3,13 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>BMI Calculator hosted at localhost:3500 by express.js</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="/assets/css/index.css">
   </head>
   <body>
-    <form class="bmi-calculator" action="/" method="post">
+    <form class="bmi-form" action="/BMI" method="post">
       <input type="text" class="bmi-input" name="height" placeholder="Your height in cm">
       <input type="text" class="bmi-input" name="weight" placeholder="Your weight in kg">
       <button type="submit" id="bmi-submit" name="bmi-submit">See your BMI!</button>
     </form>
+    <div class="bmi-result-div">
+      <h2 id="bmi-result">See your BMI!</h2>
+      <button type="button" class="btn">Clear</button>
+    </div>
+    <script src="/assets/jquery/jquery.min.js"></script>
+    <script src="/assets/script/testJQ.js"></script>
   </body>
 </html>
