@@ -11,4 +11,4 @@ function calculate_BMI(height, weight){
   }
 }
 
-exports.calculate_BMI = calculate_BMI;
+exports.calculateBMI = calculate_BMI;

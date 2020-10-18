@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>openWeatherMap API demo</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+
+<body>
+  <form class="city-form" action="/" method="post">
+    <label for="city-input"><b>City name: </b></label>
+    <input type="text" id="city-input" name="cityName" placeholder="type in a city name, such as 'Madrid'">
+    <button type="submit" class="btn" id="city-submit">Check weather!</button>
+  </form>
+  <div id="weatherInfo-container"></div>
+  <button type="button" id="city-clear" class="btn">Clear</button>
+  <script src="/assets/jquery/jquery.min.js"></script>
+  <script src="/assets/jq_dom.js"></script>
+</body>
+
+</html>

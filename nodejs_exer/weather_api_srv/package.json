@@ -1,0 +1,28 @@
+{
+  "type": "module",
+  "name": "weather_api_srv",
+  "version": "1.0.0",
+  "description": "This directory implements client-server and server-remote interaction as well as json parsing by taking openweathermap API as an example",
+  "main": "express_srv.js",
+  "scripts": {
+    "test": "node express_srv.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/Orthologues/WebProgrammingExer.git"
+  },
+  "keywords": [
+    "openWeatherMap",
+    "API",
+    "json"
+  ],
+  "author": "Jiawei Zhao",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.4.0",
+    "curl": "^0.1.4"
+  }
+}
