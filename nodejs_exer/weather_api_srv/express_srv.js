@@ -5,10 +5,8 @@ const app = express();
 import https from 'https';
 import bodyParser from 'body-parser';
 import fs from 'fs';
-import {
-  default as weatherInfo,
-  windDirection as windDirec
-} from './weather_API_info.js'
+// this is static import, doesn't work for async functions
+import { default as weatherInfo, windDirection as windDirec } from './lib/weather_API_info.js'
 // __dirname isn't predefined in ES6 syntax
 import path from 'path';
 console.log(JSON.stringify(import.meta));
@@ -19,7 +17,7 @@ const __dirname = path.dirname(moduleURL.pathname);
 // __dirname means the current folder
 var queryTimes = 0;
 
-// use body-parser to parse form request
+// use body-parser to parse body of form request
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -31,7 +29,7 @@ app.use('/assets/jquery', express.static(path.join(__dirname, 'node_modules/jque
 app.get("/", (req, res) => {
   // test whether module importation above is successful
   console.log(windDirec('170'));
-  let index_html = path.join(__dirname, 'src/index.html');
+  let index_html = path.join(__dirname, 'index.html');
   if (fs.existsSync(index_html)) {
     res.sendFile(index_html);
   } else {
@@ -39,11 +37,12 @@ app.get("/", (req, res) => {
   }
 });
 
-app.post("/", (req, res) => {
+// in order to call async function 'weatherInfo', add 'async' before (req,res)
+app.post("/", async (req, res) => {
   let weather = [];
-  async () => {
-    weather = await weatherInfo(req.body.cityName, 'metric');
-  }
+  let unit = 'metric';
+  weather = await weatherInfo(req.body.cityName, unit);
+  console.log(weather);
   if (weather.length > 1){
     queryTimes++;
   }
