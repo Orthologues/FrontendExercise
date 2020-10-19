@@ -17,10 +17,8 @@ const __dirname = path.dirname(moduleURL.pathname);
 // __dirname means the current folder
 var queryTimes = 0;
 
-// use body-parser to parse body of form request
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+// use bodyParser.json() to parse json-type data in request from $.ajax()
+app.use(bodyParser.json());
 // mount the path of static files under ./src to /assets
 app.use('/assets', express.static(path.join(__dirname, 'src')));
 // mount distributable jquery path to '/asset/jquery' as middleware
@@ -38,15 +36,18 @@ app.get("/", (req, res) => {
 });
 
 // in order to call async function 'weatherInfo', add 'async' before (req,res)
-app.post("/", async (req, res) => {
+app.post("/save", async (req, res) => {
   let weather = [];
-  let unit = 'metric';
-  weather = await weatherInfo(req.body.cityName, unit);
+  // $.ajax() is an asynchronous function, use 'await' to render code synchronous
+  const query = await req.body;
+  console.log(query);
+  weather = await weatherInfo(req.body.cityName, req.body.unit);
   console.log(weather);
   if (weather.length > 1){
     queryTimes++;
   }
   console.log(`You have successfully search weather of ${queryTimes} cities.`);
+  res.redirect('/');
 });
 
 app.listen(3550, () => {

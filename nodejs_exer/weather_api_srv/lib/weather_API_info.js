@@ -31,9 +31,9 @@ function getWindDirec(degree) {
 
 // axios.get() returns to a promise, 'then' waits until the promise is resolved
 async function getWeatherInfo(city, unit) {
-  const units = unit;
-  const url = `${API_header}${city}&units=${units}&appid=${apiKey}`;
+  const url = `${API_header}${city}&units=${unit}&appid=${apiKey}`;
   let weatherInfo = [];
+  let t_unit = '';
   const dtObj = await axios.get(url).then(response => response.data).catch(err => {
     weatherInfo = [`${err.message}. Sorry, your query was invalid, please type in an actual city name.`];
   });
@@ -45,9 +45,20 @@ async function getWeatherInfo(city, unit) {
   weatherInfo.push(iconUrl);
   let nameStr = `city: ${dtObj.name}, country: ${dtObj.sys.country}`;
   weatherInfo.push(nameStr);
-  let tempStr = `temperature: ${dtObj.main.temp.toFixed(1)}°C`;
+  // determine units of temperature according to 'unit'
+  switch (unit) {
+    case 'metric':
+      t_unit = 'C';
+      break;
+    case 'imperial':
+      t_unit = 'F';
+      break;
+    default:
+      t_unit = 'K';
+  }
+  let tempStr = `temperature: ${dtObj.main.temp.toFixed(1)}°${t_unit}`;
   weatherInfo.push(tempStr);
-  let feelingTempStr = `feels like: ${dtObj.main.feels_like.toFixed(1)}°C`;
+  let feelingTempStr = `feels like: ${dtObj.main.feels_like.toFixed(1)}°${t_unit}`;
   weatherInfo.push(feelingTempStr);
   let humidityStr = `humidity: ${dtObj.main.humidity}%`;
   weatherInfo.push(humidityStr);
