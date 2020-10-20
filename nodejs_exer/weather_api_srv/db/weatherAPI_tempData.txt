@@ -1,0 +1,8 @@
+Lund, country: SE
+2020-10-21 0:39:3
+temperature: 10.0°C
+feels like: 6.6°C
+humidity: 93%
+wind: 4.6m/s, Southwest
+visibility: 8000m
+https://openweathermap.org/img/wn/50n@2x.png

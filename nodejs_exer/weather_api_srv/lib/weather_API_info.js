@@ -29,22 +29,25 @@ function getWindDirec(degree) {
   }
 }
 
-// axios.get() returns to a promise, 'then' waits until the promise is resolved
+// axios.get() returns to a promise, 'then' returns a promise and is used in chaining
 async function getWeatherInfo(city, unit) {
   const url = `${API_header}${city}&units=${unit}&appid=${apiKey}`;
   let weatherInfo = [];
   let t_unit = '';
-  const dtObj = await axios.get(url).then(response => response.data).catch(err => {
+  const dtObj = await axios.get(url).then(promise => promise.data).catch(err => {
     weatherInfo = [`${err.message}. Sorry, your query was invalid, please type in an actual city name.`];
   });
   // if error was caught, return immediately
-  if (weatherInfo.length == 1){
+  if (weatherInfo.length == 1) {
     return weatherInfo;
   }
-  let iconUrl = `https://openweathermap.org/img/wn/${dtObj.weather[0].icon}@2x.png`;
-  weatherInfo.push(iconUrl);
-  let nameStr = `city: ${dtObj.name}, country: ${dtObj.sys.country}`;
+  let nameStr = `${dtObj.name}, country: ${dtObj.sys.country}`;
   weatherInfo.push(nameStr);
+  let today = new Date();
+  let date = `${today.getFullYear()}-${(today.getMonth() + 1)}-${today.getDate()}`;
+  let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+  let dateTime = `${date} ${time}`;
+  weatherInfo.push(dateTime);
   // determine units of temperature according to 'unit'
   switch (unit) {
     case 'metric':
@@ -65,10 +68,15 @@ async function getWeatherInfo(city, unit) {
   let windDirection = getWindDirec(dtObj.wind.deg);
   let windStr = `wind: ${dtObj.wind.speed}m/s, ${windDirection}`;
   weatherInfo.push(windStr);
+  let visibilityStr = `visibility: ${dtObj.visibility}m`;
+  weatherInfo.push(visibilityStr);
+  let iconUrl = `https://openweathermap.org/img/wn/${dtObj.weather[0].icon}@2x.png`;
+  weatherInfo.push(iconUrl);
   // https.get is asynchronous, its return value would be 'undefined' without using 'res.on('end',function(){})'
   return weatherInfo;
 }
 
 export {
-  getWeatherInfo as default, getWindDirec as windDirection,
+  getWeatherInfo as
+  default, getWindDirec as windDirection,
 };
