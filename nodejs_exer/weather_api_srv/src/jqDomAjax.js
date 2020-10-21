@@ -1,7 +1,7 @@
 // this script corresponds to ./index.html, uses jquery AJAX and DOM
 
 $(document).ready(() => {
-  var lastSuccQuery;
+  var lastSuccQuery = '';
   var if_lastQuery_succeeded = false;
   console.log('DOM is ready');
   $("#city-form").submit(event => {
@@ -38,9 +38,6 @@ $(document).ready(() => {
         unit: tp_unit
       }
     } else { //update the last successful query, can switch its temperature unit
-      //remove quotes wrapping ${lastSuccQuery}
-      lastSuccQuery = lastSuccQuery.replace(/^\"/, "");
-      lastSuccQuery = lastSuccQuery.replace(/\"$/, "");
       cityFormData = {
         city_name: lastSuccQuery,
         unit: tp_unit
@@ -55,7 +52,7 @@ $(document).ready(() => {
       data: JSON.stringify(cityFormData),
       dataType: 'json',
       success: res => {
-        html_show_weather(res.data, cityFormData); //res.data returns to an object(array)
+        html_show_weather(res.res_data, cityFormData); //res.data returns to an object(array)
       }
     });
   }
@@ -66,10 +63,10 @@ $(document).ready(() => {
       if_lastQuery_succeeded = false;
       $('#weatherInfo-container').append(`<p class='weather-info'>${weather[0]}</p>`);
     } else {
-      lastSuccQuery = JSON.stringify(query.city_name);
+      lastSuccQuery = query.city_name;
       if_lastQuery_succeeded = true;
       let iconUrl = weather.pop();
-      let imgTag = `<img src=${iconUrl} class="weather-img" alt="weather img">`;
+      let imgTag = `<img src='${iconUrl}' class='weather-img' alt='weather img'>`;
       $('#weatherInfo-container').append(imgTag);
       for (let info of weather) {
         $('#weatherInfo-container').append(`<p class='weather-info'>${info}</p>`);
