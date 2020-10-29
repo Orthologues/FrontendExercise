@@ -1,5 +1,6 @@
 //this server uses ES6 syntax
 //use nodemon to launch this server, 'nodemon express_srv.js'
+//to launch mongodb, use 'brew services start mongodb-community@4.4'
 import express from 'express';
 const app = express();
 import https from 'https';
@@ -10,6 +11,9 @@ import {
   default as weatherInfo,
   windDirection as windDirec
 } from './lib/weather_API_info.js'
+import {
+  default as saveWeatherInfo2Mongodb
+} from './lib/mongoose_record.js'
 // __dirname isn't predefined in ES6 syntax
 import path from 'path';
 console.log(JSON.stringify(
@@ -20,8 +24,6 @@ console.log(`pathname ${moduleURL.pathname}`);
 console.log(`dirname ${path.dirname(moduleURL.pathname)}`);
 // __dirname means the current folder
 const __dirname = path.dirname(moduleURL.pathname);
-// use this .txt file as database record
-const record_path = './db/weatherAPI_tempData.txt';
 // use bodyParser.json() to parse json-type data in request from $.ajax()
 app.use(bodyParser.json());
 // mount the path of static files under ./src to /assets
@@ -48,6 +50,12 @@ app.post("/openWeatherAPI", async (req, res, next) => {
   let weather = [];
   weather = await weatherInfo(query.city_name, query.unit);
   if (weather.length > 1) {
+    // define a const ${sysTime} to record when this post request was sent
+    const today = new Date();
+    const date = `${today.getFullYear()}${(today.getMonth() + 1)}${today.getDate()}`;
+    const time = `${today.getHours()}${today.getMinutes()}${today.getSeconds()}`;
+    const sysTime = `${date}_${time}`;
+    await saveWeatherInfo2Mongodb(weather, sysTime);
     res.send({
       res_data: weather
     });
