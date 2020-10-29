@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A First App</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="first-app">
+    <div>
+      <!-- it isn't necessary to add 'for="goal"' in <labels> -->
+      <!-- <label for="goal">Goal</label> -->
+      <label>goal</label>
+      <h3 v-html="goalNotification" ref="gN1" style="color:blue;"></h3>
+      <h3 v-html="goalNotification" ref="gN2"></h3>
+      <input type="text" id="goal-input" v-model="enteredValue" />
+      <button v-on:click="addGoal">Add Goal</button>
+      <button style="margin-left:30px;" v-on:click="deleteGoal">Delete Goal</button>
+    </div>
+    <ul>
+      <li v-for="goal in goals">{{ goal }}</li>
+    </ul>
+  </div>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
