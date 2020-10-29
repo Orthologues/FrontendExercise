@@ -6,7 +6,7 @@
 *tern*
 *.zip
 vue_exer/*
-!vue_exer/myApp_*/
+!vue_exer/Apps/
 *MACOSX*
 advanced_css/StubCode.html
 bootstrap/bootstrap-4.5.2/*
