@@ -1,5 +1,5 @@
 //this server uses ES6 syntax
-//use nodemon or node to launch this server, like 'nodemon express_srv.js'
+//use 'sudo node express_srv.js' to launch this server under Ubuntu20.04 since system requires sudo permission to open mongodb
 import express from 'express';
 const app = express();
 import bodyParser from 'body-parser';
@@ -22,13 +22,13 @@ import {
   default as saveWeatherInfo2Mongodb
 } from './lib/mongoose_record.js'
 
-//to launch mongodb, spawn a detached childProcess and run 'brew services start mongodb-community@4.4'
+//to launch mongodb, spawn a childProcess and run 'sudo systemctl start mongod' in Ubuntu20.04
 import {
   spawn
 } from 'child_process';
-spawn('brew', ['services', 'start', 'mongodb-community@4.4'], {
-  detached: true,
-  stdio: 'ignore'
+spawn('sudo systemctl start mongod', {
+  stdio: 'ignore',
+  shell: true
 });
 
 // __dirname isn't predefined in ES6 syntax
@@ -93,11 +93,6 @@ const server = app.listen(3550, () => {
 async function writeAndCloseMongodb(sigType) {
   await saveWeatherInfo2Mongodb(weatherRecords, sysTime).catch(err => {
     console.log(err.message);
-  });
-  // open a new shell to close mongodb
-  spawn('brew services stop mongodb-community@4.4', {
-    stdio: 'ignore',
-    shell: true
   });
   console.log(sigType);
 }
