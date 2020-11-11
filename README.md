@@ -1,6 +1,6 @@
 # FrontendExercise
 
-This repository consists of my notes and exercises in my Web Development Bootcamp course on Udemy.
+This repository consists of my notes and exercises in my Web Development courses on Udemy.
 
 ## Links
 
@@ -112,3 +112,18 @@ console.log(`dirname ${path.dirname(moduleURL.pathname)}`);
 const __dirname = path.dirname(moduleURL.pathname);
 console.log(__dirname);
 ```
+
+### Set up a typescript project
+
+```bash
+mkdir -p my_ts_project && cd my_ts_project
+npm init -y && tsc --init
+```
+
+add <code>"build": "tsc"</code> in section <code>"scripts": </code> in <code>package.json</code>, then run
+
+```bash
+npm run build
+```
+
+to automatically compile typescript files into javascript files
